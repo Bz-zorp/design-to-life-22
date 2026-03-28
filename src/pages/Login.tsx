@@ -5,8 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import doctorImg from "@/assets/doctor-illustration.png";
-import medicalBg from "@/assets/medical-bg-elements.png";
 
 type Mode = "login" | "signup" | "forgot";
 
@@ -76,11 +74,10 @@ const Login = () => {
     }}>
       <div className="w-full max-w-[900px] bg-card rounded-2xl overflow-hidden flex flex-col md:flex-row" style={{ boxShadow: "0 20px 60px -15px hsl(211 70% 50% / 0.15)" }}>
         {/* Left illustration */}
-        <div className="hidden md:flex md:w-[45%] relative items-end justify-center px-6 pt-12 pb-0 overflow-hidden" style={{
+        <div className="hidden md:flex md:w-[45%] relative items-center justify-center px-6 overflow-hidden" style={{
           background: "linear-gradient(180deg, hsl(210 60% 95%) 0%, hsl(210 65% 88%) 100%)"
         }}>
-          <img src={medicalBg} alt="" className="absolute bottom-0 left-0 w-full opacity-40" />
-          <img src={doctorImg} alt="Doctor" className="relative z-10 max-h-[340px] object-contain" />
+          <img src="/logo.png" alt="HealthSpherea" className="relative z-10 max-h-[220px] object-contain" />
         </div>
 
         {/* Right form */}
