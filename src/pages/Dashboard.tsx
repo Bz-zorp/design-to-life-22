@@ -43,6 +43,8 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { appointments } = useAppointments();
+  const locationCtx = useLocation();
+  const cityKey = locationCtx.manualCity || detectSupportedCity(locationCtx.city) || "pune";
   const [detailsDialog, setDetailsDialog] = useState<Appointment | null>(null);
   const displayName = user?.user_metadata?.full_name || user?.email?.split("@")[0] || "User";
 
@@ -51,9 +53,7 @@ const Dashboard = () => {
   return (
     <div className="space-y-5 sm:space-y-6">
       {/* Welcome + Banner */}
-      <div className="relative overflow-hidden rounded-xl" style={{
-        background: "linear-gradient(135deg, hsl(210 60% 95%) 0%, hsl(210 70% 90%) 100%)"
-      }}>
+      <div className="relative overflow-hidden rounded-xl bg-accent/40 dark:bg-accent/20 border border-border">
         <div className="relative z-10 p-5 sm:p-6 lg:p-8">
           <h1 className="text-xl sm:text-2xl lg:text-[28px] font-bold text-foreground">Welcome, {displayName}!</h1>
           <p className="text-muted-foreground mt-1 text-xs sm:text-sm">Book and manage your appointments easily.</p>
