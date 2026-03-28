@@ -6,9 +6,39 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { useState } from "react";
 import { useAppointments, Appointment } from "@/context/AppointmentsContext";
 import { useAuth } from "@/context/AuthContext";
+import { useLocation, detectSupportedCity } from "@/context/LocationContext";
 import dashboardBanner from "@/assets/dashboard-banner.png";
 import HealthTipsSlider from "@/components/HealthTipsSlider";
 
+const cityCamps: Record<string, { name: string; location: string; address: string; date: string }[]> = {
+  pune: [
+    { name: "Free Eye Checkup Camp", location: "Vision Care Clinic (2 km away)", address: "124, MG Road, Pune", date: "28" },
+    { name: "Diabetes Checkup Camp", location: "City Health Center (3 km away)", address: "Rajpath Nagar, Pune", date: "01" },
+  ],
+  mumbai: [
+    { name: "Free Blood Donation Camp", location: "Bombay Hospital (3 km away)", address: "Marine Lines, Mumbai", date: "30" },
+    { name: "Cardiac Screening Camp", location: "Hinduja Hospital (5 km away)", address: "Mahim, Mumbai", date: "03" },
+  ],
+  lonikalbhor: [
+    { name: "Free General Health Camp", location: "Chaitanya Hospital (1 km away)", address: "Loni Kalbhor, Pune-Solapur Highway", date: "10" },
+    { name: "Eye Checkup Camp", location: "Sai Hospital (0.5 km away)", address: "Near Bus Stand, Loni Kalbhor", date: "15" },
+  ],
+};
+
+const cityOffers: Record<string, { discount: string; off: string; desc: string; hospital: string; valid: string }[]> = {
+  pune: [
+    { discount: "Get 20%", off: "OFF", desc: "on Full Body Checkup", hospital: "HealthPlus Hospital", valid: "Valid April 2024" },
+    { discount: "50%", off: "OFF", desc: "Dental Checkup Packages", hospital: "Smile Dental", valid: "Valid May 3, 2024" },
+  ],
+  mumbai: [
+    { discount: "25%", off: "OFF", desc: "Full Body Health Checkup", hospital: "Kokilaben Hospital", valid: "Valid May 15, 2024" },
+    { discount: "40%", off: "OFF", desc: "Eye Care Package", hospital: "Lilavati Hospital", valid: "Valid May 10, 2024" },
+  ],
+  lonikalbhor: [
+    { discount: "Free", off: "", desc: "Basic Health Screening", hospital: "Chaitanya Hospital", valid: "Valid May 20, 2024" },
+    { discount: "20%", off: "OFF", desc: "Family Health Package", hospital: "Lifeline Hospital", valid: "Valid May 25, 2024" },
+  ],
+};
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
