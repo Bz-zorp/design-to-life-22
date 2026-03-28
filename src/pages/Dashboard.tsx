@@ -6,13 +6,45 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { useState } from "react";
 import { useAppointments, Appointment } from "@/context/AppointmentsContext";
 import { useAuth } from "@/context/AuthContext";
+import { useLocation, detectSupportedCity } from "@/context/LocationContext";
 import dashboardBanner from "@/assets/dashboard-banner.png";
 import HealthTipsSlider from "@/components/HealthTipsSlider";
 
+const cityCamps: Record<string, { name: string; location: string; address: string; date: string }[]> = {
+  pune: [
+    { name: "Free Eye Checkup Camp", location: "Vision Care Clinic (2 km away)", address: "124, MG Road, Pune", date: "28" },
+    { name: "Diabetes Checkup Camp", location: "City Health Center (3 km away)", address: "Rajpath Nagar, Pune", date: "01" },
+  ],
+  mumbai: [
+    { name: "Free Blood Donation Camp", location: "Bombay Hospital (3 km away)", address: "Marine Lines, Mumbai", date: "30" },
+    { name: "Cardiac Screening Camp", location: "Hinduja Hospital (5 km away)", address: "Mahim, Mumbai", date: "03" },
+  ],
+  lonikalbhor: [
+    { name: "Free General Health Camp", location: "Chaitanya Hospital (1 km away)", address: "Loni Kalbhor, Pune-Solapur Highway", date: "10" },
+    { name: "Eye Checkup Camp", location: "Sai Hospital (0.5 km away)", address: "Near Bus Stand, Loni Kalbhor", date: "15" },
+  ],
+};
+
+const cityOffers: Record<string, { discount: string; off: string; desc: string; hospital: string; valid: string }[]> = {
+  pune: [
+    { discount: "Get 20%", off: "OFF", desc: "on Full Body Checkup", hospital: "HealthPlus Hospital", valid: "Valid April 2024" },
+    { discount: "50%", off: "OFF", desc: "Dental Checkup Packages", hospital: "Smile Dental", valid: "Valid May 3, 2024" },
+  ],
+  mumbai: [
+    { discount: "25%", off: "OFF", desc: "Full Body Health Checkup", hospital: "Kokilaben Hospital", valid: "Valid May 15, 2024" },
+    { discount: "40%", off: "OFF", desc: "Eye Care Package", hospital: "Lilavati Hospital", valid: "Valid May 10, 2024" },
+  ],
+  lonikalbhor: [
+    { discount: "Free", off: "", desc: "Basic Health Screening", hospital: "Chaitanya Hospital", valid: "Valid May 20, 2024" },
+    { discount: "20%", off: "OFF", desc: "Family Health Package", hospital: "Lifeline Hospital", valid: "Valid May 25, 2024" },
+  ],
+};
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { appointments } = useAppointments();
+  const locationCtx = useLocation();
+  const cityKey = locationCtx.manualCity || detectSupportedCity(locationCtx.city) || "pune";
   const [detailsDialog, setDetailsDialog] = useState<Appointment | null>(null);
   const displayName = user?.user_metadata?.full_name || user?.email?.split("@")[0] || "User";
 
@@ -21,9 +53,7 @@ const Dashboard = () => {
   return (
     <div className="space-y-5 sm:space-y-6">
       {/* Welcome + Banner */}
-      <div className="relative overflow-hidden rounded-xl" style={{
-        background: "linear-gradient(135deg, hsl(210 60% 95%) 0%, hsl(210 70% 90%) 100%)"
-      }}>
+      <div className="relative overflow-hidden rounded-xl bg-accent/40 dark:bg-accent/20 border border-border">
         <div className="relative z-10 p-5 sm:p-6 lg:p-8">
           <h1 className="text-xl sm:text-2xl lg:text-[28px] font-bold text-foreground">Welcome, {displayName}!</h1>
           <p className="text-muted-foreground mt-1 text-xs sm:text-sm">Book and manage your appointments easily.</p>
@@ -120,10 +150,7 @@ const Dashboard = () => {
               </Link>
             </div>
             <div className="space-y-4">
-              {[
-                { name: "Free Eye Checkup Camp", location: "Vision Care Clinic (2 km away)", address: "124, MG Road, Pune", date: "28" },
-                { name: "Diabetes Checkup Camp", location: "City Health Center (3 km away)", address: "City Health Center", date: "01" },
-              ].map((camp) => (
+              {(cityCamps[cityKey] || cityCamps.pune).map((camp) => (
                 <div key={camp.name} className="p-3 rounded-xl border border-border bg-card">
                   <div className="flex items-start gap-3">
                     <div className="flex-shrink-0 text-center">
@@ -159,10 +186,7 @@ const Dashboard = () => {
               </Link>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              {[
-                { discount: "Get 20%", off: "OFF", desc: "on Full Body Checkup", hospital: "HealthPlus Hospital", valid: "Valid April 2024" },
-                { discount: "50%", off: "OFF", desc: "Dental Checkup Packages", hospital: "Smile Dental", valid: "Valid May 3, 2024" },
-              ].map((offer) => (
+              {(cityOffers[cityKey] || cityOffers.pune).map((offer) => (
                 <button key={offer.desc} className="p-2.5 sm:p-3 rounded-xl border border-border bg-card text-left hover:bg-accent/20 transition-colors" onClick={() => navigate("/offers")}>
                   <div className="flex items-center gap-1">
                     <span className="badge-discount text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5">{offer.discount}</span>
