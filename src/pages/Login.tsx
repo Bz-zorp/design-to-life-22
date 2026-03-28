@@ -73,7 +73,6 @@ const Login = () => {
       <div className="w-full max-w-[900px] bg-card rounded-2xl overflow-hidden flex flex-col md:flex-row border border-border" style={{ boxShadow: "0 20px 60px -15px hsl(211 70% 50% / 0.15)" }}>
         {/* Left illustration */}
         <div className="hidden md:flex md:w-[45%] relative items-center justify-center px-6 overflow-hidden bg-accent/40 dark:bg-accent/20">
-        }}>
           <img src="/logo.png" alt="HealthSpherea" className="relative z-10 max-h-[220px] object-contain" />
         </div>
 

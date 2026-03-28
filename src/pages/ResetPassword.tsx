@@ -46,9 +46,7 @@ const ResetPassword = () => {
 
   if (!ready) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4" style={{
-        background: "linear-gradient(180deg, hsl(210 60% 95%) 0%, hsl(210 70% 90%) 50%, hsl(210 60% 95%) 100%)"
-      }}>
+      <div className="min-h-screen flex items-center justify-center p-4 bg-background">
         <div className="bg-card p-8 rounded-2xl max-w-md w-full text-center space-y-4">
           <h1 className="text-xl font-bold text-foreground">Invalid or Expired Link</h1>
           <p className="text-sm text-muted-foreground">This password reset link is invalid or has expired. Please request a new one.</p>
@@ -59,9 +57,7 @@ const ResetPassword = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4" style={{
-      background: "linear-gradient(180deg, hsl(210 60% 95%) 0%, hsl(210 70% 90%) 50%, hsl(210 60% 95%) 100%)"
-    }}>
+      <div className="min-h-screen flex items-center justify-center p-4 bg-background">
       <div className="bg-card p-8 rounded-2xl max-w-md w-full space-y-6" style={{ boxShadow: "0 20px 60px -15px hsl(211 70% 50% / 0.15)" }}>
         <div>
           <h1 className="text-2xl font-bold text-foreground">Set New Password</h1>
