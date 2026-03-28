@@ -150,10 +150,7 @@ const Dashboard = () => {
               </Link>
             </div>
             <div className="space-y-4">
-              {[
-                { name: "Free Eye Checkup Camp", location: "Vision Care Clinic (2 km away)", address: "124, MG Road, Pune", date: "28" },
-                { name: "Diabetes Checkup Camp", location: "City Health Center (3 km away)", address: "City Health Center", date: "01" },
-              ].map((camp) => (
+              {(cityCamps[cityKey] || cityCamps.pune).map((camp) => (
                 <div key={camp.name} className="p-3 rounded-xl border border-border bg-card">
                   <div className="flex items-start gap-3">
                     <div className="flex-shrink-0 text-center">
@@ -189,10 +186,7 @@ const Dashboard = () => {
               </Link>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              {[
-                { discount: "Get 20%", off: "OFF", desc: "on Full Body Checkup", hospital: "HealthPlus Hospital", valid: "Valid April 2024" },
-                { discount: "50%", off: "OFF", desc: "Dental Checkup Packages", hospital: "Smile Dental", valid: "Valid May 3, 2024" },
-              ].map((offer) => (
+              {(cityOffers[cityKey] || cityOffers.pune).map((offer) => (
                 <button key={offer.desc} className="p-2.5 sm:p-3 rounded-xl border border-border bg-card text-left hover:bg-accent/20 transition-colors" onClick={() => navigate("/offers")}>
                   <div className="flex items-center gap-1">
                     <span className="badge-discount text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5">{offer.discount}</span>
